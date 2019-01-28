@@ -1,2 +1,38 @@
-<h1>Categories#edit</h1>
-<p>Find me in app/views/categories/edit.html.erb</p>
+<h2>Edit category</h2>
+
+<%= form_for @category do |f| %>
+  <% if @category.errors.any? %>
+    <% @category.errors.full_messages.each do |msg| %>
+      <div class="alert alert-danger">
+        <%= msg %>
+      </div>
+    <% end %>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :name %>
+    <%= f.text_field :name, class: "form-control" %>
+  </div>
+
+  <%= f.submit "Submit", class: "btn btn-primary" %>
+  <%= link_to "Cancel", categories_path, class: "btn btn-secondary" %>
+<% end %>
+<br /><br />
+
+<h3 class="page-header">Images in <%= @category.name %></h3>
+<div id="edit_images">
+  <% if @images.exists? %>
+    <% @images.each_slice(6) do |image| %>
+      <div class="row">
+        <% image.each do |image| %>
+          <div class="col-md-2">
+            <%= image_tag image.image_url(:thumb) %>
+            <center><%= link_to "Delete", image_path(image), class: "btn btn-danger", method: :delete, data: {confirm: "Are you sure?"} %></center>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  <% else %>
+    <p>No images in this category</p>
+  <% end %>
+</div>

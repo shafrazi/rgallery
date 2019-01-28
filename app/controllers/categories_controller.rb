@@ -19,11 +19,13 @@ class CategoriesController < ApplicationController
 
   def edit
     @category = Category.find(params[:id])
+    @images = @category.images.all
   end
 
   def update
     @category = Category.find(params[:id])
     @category.update(category_params)
+    redirect_to category_path
   end
 
   def destroy
@@ -33,6 +35,8 @@ class CategoriesController < ApplicationController
   end
 
   def show
+    @category = Category.find(params[:id])
+    @images = @category.images.all
   end
 
   private

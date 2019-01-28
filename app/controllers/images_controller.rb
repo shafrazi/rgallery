@@ -24,7 +24,10 @@ class ImagesController < ApplicationController
   end
 
   def destroy
+    @category = @image.category
     @image.destroy
+    flash[:alert] = "Image deleted"
+    redirect_to edit_category_path(@category)
   end
 
   def index
